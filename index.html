@@ -1,0 +1,149 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <title>Document</title>
+    <!-- voeg bootstrap cdn -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<style>
+    #map { height: 600px; }
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+    
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="">
+    </script>
+    <!-- Trigger/Open The Modal -->
+    
+    
+    <!-- The Modal -->
+    
+    <div style="position: relative; z-index: 2;" id="map">
+        
+        
+    </div>
+    <div class="inputfield " style="display: hidden; position: relative; z-index: 100; top: 50%; right: 50%;">
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="long" placeholder="long" readonl>
+        <input type="text" id="lat" placeholder="lat" readonl>
+        <button onclick="Createname()">Submit</button>
+    </div>
+    
+    <script>
+        var array = [];
+        // create a map
+        var map = L.map('map').setView([51.5719149, 4.768323], 13);
+        // create a tilelayer
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        
+        // create a new icon
+        var greenIcon = L.icon({
+            iconUrl: 'img/curio.png',
+            
+            iconSize:     [40, 40], // size of the icon
+            shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        fetch('https://6391a4c6ac688bbe4c4df3d1.mockapi.io/locations')
+            .then( result => result.json())
+            
+            .then( locatie => {
+                // create an forloop
+                for (let i = 0; i < locatie.length; i++) {
+                    L.marker([locatie[i].lat, locatie[i].lng], {icon: greenIcon}).addTo(map).bindPopup(Createname());               
+                };
+                // create a new for each
+                locatie.forEach(item =>{
+                    // push the lat and lng to the array
+                    array.push(new L.LatLng(item.lat, item.lng));
+                });
+                // create a new settings for the polyline
+                var firstpolyline = new L.polyline(array, {
+                    color: 'red',
+                    weight: 5,
+                    opacity: 1,
+                    smoothFactor: 1
+                });
+                // add the polyline to the map
+                firstpolyline.addTo(map);
+        });
+        
+        
+        
+        
+        // get longitude and latitude from click on map
+        map.on('click', function(e) {
+            // show the input field
+            document.querySelector(".inputfield").style.display = "block";
+            // set the value of the input field
+            document.getElementById("long").value = e.latlng.lng;
+            document.getElementById("lat").value = e.latlng.lat;
+        });
+
+        function Createname() {
+            const response = fetch("https://6391a4c6ac688bbe4c4df3d1.mockapi.io/locations", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lat: document.getElementById("lat").value,
+                    lng: document.getElementById("long").value,
+                    name: document.getElementById("name").value
+                })
+            });
+            // verstuur value in een post request naar de api
+            
+        }
+        
+    </script>
+    <script>
+        
+        // api link 
+    </script>
+</body>
+</html>
