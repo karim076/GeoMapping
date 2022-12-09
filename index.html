@@ -1,26 +1,31 @@
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-    <title>Map</title>
+    <title>Curio | Map</title>
     <!-- voeg bootstrap cdn -->
-    <link rel="stylesheet" href="img/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Curio API - Klik op op het map om een waypoint aan te maken</h1>
-    <!-- load library before using anything -->
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-    <!-- Create map id => map 'MUST DONT TOUCH ' -->
-    <div style="position: relative; z-index: 2;" id="map"></div>
-    <!-- Create input field -->
-    <div class="inputfield " style="display: hidden; position: relative; z-index: 100; top: 50%; right: 50%;">
-        <input type="text" id="name" placeholder="Name">
-        <input type="text" id="long" placeholder="long" readonl>
-        <input type="text" id="lat" placeholder="lat" readonl>
-        <button onclick="Createname()">Submit</button>
+    <style>
+        #map { height: 600px; }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="">
+    </script>
+    <div class="container d-flex flex-column">
+        <h1>Curio API - Klik op op het map om een waypoint aan te maken</h1>
+        <!-- create visual map - Dont touch this else no map -->
+        <div id="map"></div>
+        <!-- input fields to create a new waypoint -->
+        <div class="inputfield " style="display: none;  ">
+            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="long" placeholder="long" readonl>
+            <input type="text" id="lat" placeholder="lat" readonl>
+            <button onclick="Createname()">Submit</button>
+        </div>
     </div>
     <!-- Custom js -->
     <script src="js/map.js"></script>
