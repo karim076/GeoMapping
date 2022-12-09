@@ -15,16 +15,27 @@
     </style>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin="">
     </script>
-    <div class="container d-flex flex-column">
-        <h1>Curio API - Klik op op het map om een waypoint aan te maken</h1>
+    <div class="container d-flex flex-column justify-content-center">
+        <h1 class="text-white">Curio API - Klik op op het map om een waypoint aan te maken</h1>
         <!-- create visual map - Dont touch this else no map -->
         <div id="map"></div>
         <!-- input fields to create a new waypoint -->
-        <div class="inputfield " style="display: none;  ">
-            <input type="text" id="name" placeholder="Name">
-            <input type="text" id="long" placeholder="long" readonl>
-            <input type="text" id="lat" placeholder="lat" readonl>
-            <button onclick="Createname()">Submit</button>
+        <div class="">
+            <div class="inputfield form-group mt-4" style="display: none;">
+                <label class="text-white fw-bold" style="font-size: 20px;" for="">plaats naam</label>
+                <input class=" form-control" type="text" id="name" placeholder="Voer een plaats naam in">
+                <div class="row">
+                    <div class="col">
+                        <input class=" mt-2 form-control" type="text" id="long" readonl>
+                    </div>
+                    <div class="col">
+                        <input class=" mt-2 form-control" type="text" id="lat" readonl>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center w-100">
+                    <button class="mt-2 btn btn-light" onclick="Createname()">Submit</button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Custom js -->
